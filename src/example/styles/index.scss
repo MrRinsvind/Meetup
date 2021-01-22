@@ -1,0 +1,72 @@
+@import './variables.scss';
+
+@mixin render($scene) {
+  @for $frame from 1 through 120 {
+    #layout span:nth-of-type(#{$frame}) {
+      transition-delay: random(500) + ms !important;
+      background-color: rgba(#6BBC44, random(10)/5+.2);
+      @if length($scene) >= $frame {
+        clip-path: nth($scene, $frame);
+      }
+      @else {
+        clip-path: polygon(50% 50%, 50% 50%, 50% 50% )
+      }
+    }
+  }
+}
+
+.frontend {
+  @include render($frontend)
+}
+.ds {
+  @include render($ds)
+}
+.meetup {
+  @include render($meetup)
+}
+
+section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#layout {
+  display: block;
+  position: relative;
+  width: 800px;
+  height: 600px;
+  top: 0px;
+  left: 0px;
+  &> * {
+    display: block;
+    position: absolute;
+    width: 800px;
+    height: 600px;
+    background-color: black;
+    top: 0px;
+    left:0px;
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,.812);
+}
+
+.demo, .parser {
+  display: none;
+}
+
+section:last-of-type {
+  display: none;
+}
